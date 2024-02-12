@@ -20,13 +20,13 @@ const Content = () => {
                         {messages.map((message, index) =>
                             message.role === "user" ?
                                 <UserMessage key={index} message={message.content} />
-                                : <SystemMessage key={index} message={message.content} />
+                                : <SystemMessage key={index} message={message as unknown as string} />
                         )}
                     </ScrollToBottom>
                 ) : (
                     <div className="flex flex-col items-center my-16">
-                        <h1 className="text-3xl font-bold">Next-GPT</h1>
-                        <p className="text-gray-400 mt-2">You can start the conversation with the input field below.</p>
+                        <h1 className="text-3xl font-bold">Memoria Justificativa Da Ação - GPT</h1>
+                        <p className="text-gray-400 mt-2">Podes fazer as tuas perguntas aqui.</p>
                     </div>
                 )}
             </NoSSR>

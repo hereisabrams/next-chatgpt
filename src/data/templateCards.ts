@@ -4,9 +4,9 @@ export const templateCards: TemplateCard[] = [
         title: "Chat",
         description: "Chat with AI powered chatbot."
     },
-    {
-        href: "/translate",
-        title: "Translate",
-        description: "Translate text to different languages."
-    }
+    // {
+    //     href: "/translate",
+    //     title: "Translate",
+    //     description: "Translate text to different languages."
+    // }
 ];

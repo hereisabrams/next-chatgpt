@@ -1,8 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Textarea from "react-textarea-autosize";
 import axios from "axios";
-import {useDispatch, useSelector} from "react-redux";
-import {addMessage, selectMessages, selectPrompt, setPrompt} from "@/redux/reducers/chatSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addMessage, selectMessages, selectPrompt, setPrompt } from "@/redux/reducers/chatSlice";
 
 const ChatTextarea = () => {
     const dispatch = useDispatch();
@@ -11,8 +11,10 @@ const ChatTextarea = () => {
 
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [threadId, setThreadId] = useState<string>("");
 
     useEffect(() => {
+        createThread();
         if (textAreaRef.current === null) return;
         textAreaRef.current.focus();
     }, []);
@@ -29,17 +31,30 @@ const ChatTextarea = () => {
             }))
 
             axios.post('/api/chat', {
+                threadId,
                 prompt,
                 messages
             })
                 .then(response => response.data)
                 .then((data) => {
+                    console.log("data");
+                    console.log(data);
                     setIsLoading(false);
-                    data.data.map((message: any) => dispatch(addMessage(message)));
+                    dispatch(addMessage(data.message))
                 });
 
             dispatch(setPrompt(''));
         }
+    }
+
+    async function createThread() {
+        axios.get('/api/thread')
+            .then(response => response.data)
+            .then((data) => {
+                setIsLoading(false);
+                console.log(data);
+                setThreadId(data.response);
+            });
     }
 
     return (
@@ -50,11 +65,12 @@ const ChatTextarea = () => {
                 name="comment"
                 id="comment"
                 className="px-4 py-3 bg-accents-1 focus:outline-none block w-full text-white rounded-md resize-none"
-                placeholder="Type your message here..."
+                placeholder="Faz a tua pergunta aqui ..."
                 defaultValue={''}
                 value={prompt}
                 onKeyDown={handleKeyDown}
                 onInput={(e) => dispatch(setPrompt(e.currentTarget.value))}
+                disabled={isLoading}
             />
             {isLoading && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">

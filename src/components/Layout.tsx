@@ -18,7 +18,7 @@ const Layout = ({children, title}: LayoutProps) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Sidebar />
+            {/* <Sidebar /> */}
 
             <main className="pt-12 md:pt-0 md:pl-64 flex flex-col flex-1 h-screen">
                 <div className="flex-1">

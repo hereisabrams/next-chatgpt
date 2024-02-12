@@ -44,7 +44,7 @@ const TextArea = () => {
 
     return (
         <Textarea
-            placeholder={'Type your text here...'}
+            placeholder={'Faz a tua pergunta aqui ...'}
             className="px-4 py-3 bg-accents-1 focus:outline-none w-full min-h-[120px] text-white rounded-bl-lg resize-none px-5 py-3"
             onInput={handleInput}
         />

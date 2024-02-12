@@ -8,5 +8,5 @@ type Navigation = {
 
 export const navigation: Navigation[] = [
     { name: 'Chat', href: '/chat', icon: ChatBubbleOvalLeftEllipsisIcon },
-    { name: 'Translate', href: '/translate', icon: LanguageIcon },
+    // { name: 'Translate', href: '/translate', icon: LanguageIcon },
 ]

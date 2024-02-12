@@ -1,42 +1,31 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { chat } from "@/libs/openai";
-import { threadId } from 'worker_threads';
+import {chat, createThread} from "@/libs/openai";
 
 interface ChatRequest extends NextApiRequest {
   body: {
     prompt: string
     messages: ChatMessage[]
-    threadId: string
   }
 }
 
 type Data = {
-  status: boolean;
-  message?: string;
-  data?: {
-    message: ChatMessage[]
-  };
+  response: string;
 }
 
 export default async function handler(
   req: ChatRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
   try {
-    const { prompt, messages, threadId } = req.body;
-    const response = await chat(prompt, threadId);
+    const response = await createThread();
+    console.log(response.id);
     //console.log(response);
-    if (response.length > 0) {
-      if ('text' in response[0].content[0]) {
-        console.log()
-        res.status(200).json({
-          status: true,
-          message: response[0].content[0].text.value
-        })
-      }
-    }
-    
+    res.status( 200).json({
+      status: true,
+      response: response.id
+    })
   } catch (error: any) {
+    console.log(error);
     if (error.response) {
       console.log(error.response.status);
       console.log(error.response.data);

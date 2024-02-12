@@ -28,7 +28,7 @@ export default function Sidebar() {
                     >
                         <Dialog.Overlay className="fixed inset-0 bg-accents-0 bg-opacity-50" />
                     </Transition.Child>
-                    <Transition.Child
+                    {/* <Transition.Child
                         as={Fragment}
                         enter="transition ease-in-out duration-300 transform"
                         enterFrom="-translate-x-full"
@@ -83,7 +83,7 @@ export default function Sidebar() {
                                 </nav>
                             </div>
                         </div>
-                    </Transition.Child>
+                    </Transition.Child> */}
                     <div className="flex-shrink-0 w-14">{/* Force sidebar to shrink to fit close icon */}</div>
                 </Dialog>
             </Transition.Root>
