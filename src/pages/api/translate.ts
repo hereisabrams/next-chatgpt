@@ -28,7 +28,7 @@ export default async function handler(
     res.status(200).json({
       status: true,
       data: {
-        text: response.choices[0].message.content
+        text: ""
       }
     })
   } catch (error: any) {
