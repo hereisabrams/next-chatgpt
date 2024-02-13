@@ -12,7 +12,8 @@ export const runtime = 'edge';
 const handler = async (req: Request): Promise<Response> => {
   try {
     const body = await req.json()
-    console.log("body");
+    console.log(body.threadId);
+    console.log(body.prompt);
     await openai.beta.threads.messages.create(
       body.threadId,
       {
