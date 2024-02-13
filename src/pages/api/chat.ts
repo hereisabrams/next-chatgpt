@@ -20,7 +20,7 @@ export const config = {
  
 export default async function handler(
   request: NextApiRequest,
-  response: NextApiResponse,
+  res: NextApiResponse,
 ) {
   try {
     
