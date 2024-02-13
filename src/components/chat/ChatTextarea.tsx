@@ -126,7 +126,7 @@ const ChatTextarea = () => {
     }
 
     return (
-        <div className="mt-1 relative rounded-md shadow-sm h-[20%]">
+        <div className="mt-1 relative rounded-md shadow-sm">
             {messages.length == 0 ? (
                 <button disabled={isLoading} onClick={sendFirstMessage} className="flex flex-col w-full px-5 py-4 transition border-2 border-accents-3 rounded-lg hover:border-gray-500">
                     <h3 className="font-medium">{isLoading ? "Espere um momento ..." : "Vamos Começar"}</h3>
