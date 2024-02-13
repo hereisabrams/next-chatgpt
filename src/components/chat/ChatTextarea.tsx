@@ -15,8 +15,6 @@ const ChatTextarea = () => {
     const [threadId, setThreadId] = useState<string>("");
 
     useEffect(() => {
-        console.log("createThread");
-        console.log(messages)
         createThread();
         if (textAreaRef.current === null) return;
         textAreaRef.current.focus();
@@ -71,11 +69,11 @@ const ChatTextarea = () => {
     }
 
     async function createThread() {
+        setIsLoading(true);
         axios.get('/api/thread')
             .then(response => response.data)
             .then((data) => {
                 setIsLoading(false);
-                console.log(data);
                 setThreadId(data.response);
             });
     }
