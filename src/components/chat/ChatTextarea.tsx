@@ -15,6 +15,11 @@ const ChatTextarea = () => {
     const [threadId, setThreadId] = useState<string>("");
 
     useEffect(() => {
+        dispatch(addMessage({
+            role: 'user',
+            content: "Vamos começar o questionário!"
+        }))
+
         createThread();
         if (textAreaRef.current === null) return;
         textAreaRef.current.focus();
@@ -95,12 +100,27 @@ const ChatTextarea = () => {
 
     async function createThread() {
         setIsLoading(true);
-        axios.get('/api/thread')
+        const thread = await axios.get('/api/thread')
+            .then(response => response.data)
+            .then(async (data) => {
+                setThreadId(data.response);
+                return data.response;
+            });
+
+
+        await axios.post('/api/chat', {
+            threadId: thread,
+            prompt: "Vamos começar o questionário!",
+            messages
+        })
             .then(response => response.data)
             .then((data) => {
                 setIsLoading(false);
-                setThreadId(data.response);
+                dispatch(addMessage(data.message))
             });
+
+        dispatch(setPrompt(''));
+
     }
 
     return (
