@@ -137,7 +137,8 @@ const ChatTextarea = () => {
                         rows={1}
                         name="comment"
                         id="comment"
-                        className="px-4 py-3 bg-accents-1 focus:outline-none block  text-white rounded-md resize-none h-[45px]"
+                        style={{color:"white", backgroundColor: "#393939"}}
+                        className="px-4 py-3 focus:outline-none block rounded-md resize-none h-[45px]"
                         placeholder={isLoading ? 'Aguarde a resposta ...' : 'Escreva uma mensagem ...'}
                         defaultValue={''}
                         value={prompt}

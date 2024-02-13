@@ -24,6 +24,11 @@ body {
     background-color: var(--scrollbar-secondary);
 }
 
+
+textarea::placeholder {
+    color: rgb(255, 255, 255);
+  }
+
 .scroll-to-last-message {
     @apply bottom-4 right-6 bg-accents-2 border-2 border-accents-3 text-white opacity-75 w-8 h-8 rounded-full transition !important;
     background-image: url("../icons/chevron-down.png");
