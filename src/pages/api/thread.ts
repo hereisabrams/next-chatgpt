@@ -8,9 +8,6 @@ interface ChatRequest extends NextApiRequest {
   }
 }
 
-type Data = {
-  response: string;
-}
 
 export default async function handler(
   req: ChatRequest,
@@ -18,7 +15,6 @@ export default async function handler(
 ) {
   try {
     const response = await createThread();
-    console.log(response.id);
     //console.log(response);
     res.status( 200).json({
       status: true,

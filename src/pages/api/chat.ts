@@ -18,38 +18,36 @@ type Data = {
   };
 }
 
-export default async function handler(
-  req: ChatRequest,
-  res: NextApiResponse<Data>
-) {
+
+if (!process.env.OPENAI_API_KEY) {
+  throw new Error('Missing Environment Variable OPENAI_API_KEY')
+}
+
+export const config = {
+  runtime: 'edge',
+}
+
+const handler = async (req: Request): Promise<Response> => {
   try {
-    const { prompt, messages, threadId } = req.body;
-    const response = await chat(prompt, threadId);
+    const body = await req.json()
+    const response = await chat(body.prompt, body.threadId);
     //console.log(response);
+    console.log(response);
     if (response.length > 0) {
       if ('text' in response[0].content[0]) {
-        console.log()
-        res.status(200).json({
-          status: true,
-          message: response[0].content[0].text.value
-        })
+        return new Response(JSON.stringify(response[0].content[0].text.value))
       }
     }
-    
+
   } catch (error: any) {
+    console.log(error);
     if (error.response) {
-      console.log(error.response.status);
-      console.log(error.response.data);
-      res.status(500).json({
-        status: false,
-        message: error.response.data
-      })
+      return new Response(JSON.stringify(error.response.data))
     } else {
-      console.log(error.message);
-      res.status(500).json({
-        status: false,
-        message: error.message
-      })
+      return new Response(JSON.stringify(error.message))
     }
   }
 }
+
+
+export default handler

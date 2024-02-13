@@ -3,6 +3,7 @@ import Textarea from "react-textarea-autosize";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage, selectMessages, selectPrompt, setPrompt } from "@/redux/reducers/chatSlice";
+import { Button } from 'react-scroll';
 
 const ChatTextarea = () => {
     const dispatch = useDispatch();
@@ -14,6 +15,8 @@ const ChatTextarea = () => {
     const [threadId, setThreadId] = useState<string>("");
 
     useEffect(() => {
+        console.log("createThread");
+        console.log(messages)
         createThread();
         if (textAreaRef.current === null) return;
         textAreaRef.current.focus();
@@ -47,6 +50,31 @@ const ChatTextarea = () => {
         }
     }
 
+    function sendFirstMessage() {
+        setIsLoading(true);
+        dispatch(addMessage({
+            role: 'user',
+            content: "Vamos começar o questionário!"
+        }))
+
+        axios.post('/api/chat', {
+            threadId,
+            prompt: "Vamos começar o questionário!",
+            messages
+        })
+            .then(response => response.data)
+            .then((data) => {
+                console.log("data");
+                console.log("data2");
+                console.log(data);
+                setIsLoading(false);
+                // dispatch(addMessage(data.message))
+            });
+
+        dispatch(setPrompt(''));
+
+    }
+
     async function createThread() {
         axios.get('/api/thread')
             .then(response => response.data)
@@ -59,19 +87,25 @@ const ChatTextarea = () => {
 
     return (
         <div className="mt-1 relative rounded-md shadow-sm">
-            <Textarea
-                ref={textAreaRef}
-                rows={1}
-                name="comment"
-                id="comment"
-                className="px-4 py-3 bg-accents-1 focus:outline-none block w-full text-white rounded-md resize-none"
-                placeholder="Faz a tua pergunta aqui ..."
-                defaultValue={''}
-                value={prompt}
-                onKeyDown={handleKeyDown}
-                onInput={(e) => dispatch(setPrompt(e.currentTarget.value))}
-                disabled={isLoading}
-            />
+            {messages.length === 0 ? (
+                <button  disabled={isLoading} onClick={sendFirstMessage} className="flex flex-col w-full h-full px-5 py-4 transition border-2 border-accents-3 rounded-lg hover:border-gray-500">
+                    <h3 className="font-medium">Vamos Começar</h3>
+                </button>
+            ) :
+                <Textarea
+                    ref={textAreaRef}
+                    rows={1}
+                    name="comment"
+                    id="comment"
+                    className="px-4 py-3 bg-accents-1 focus:outline-none block w-full text-white rounded-md resize-none"
+                    placeholder="Faz a tua pergunta aqui ..."
+                    defaultValue={''}
+                    value={prompt}
+                    onKeyDown={handleKeyDown}
+                    onInput={(e) => dispatch(setPrompt(e.currentTarget.value))}
+                    disabled={isLoading || messages.length === 0}
+                />
+            }
             {isLoading && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                     <svg className="animate-spin h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
