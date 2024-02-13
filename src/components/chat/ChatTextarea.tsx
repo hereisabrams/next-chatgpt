@@ -39,7 +39,7 @@ const ChatTextarea = () => {
                 .then(response => response.data)
                 .then((data) => {
                     setIsLoading(false);
-                    dispatch(addMessage(data))
+                    dispatch(addMessage(data.message))
                 });
 
             dispatch(setPrompt(''));
@@ -61,7 +61,7 @@ const ChatTextarea = () => {
             .then(response => response.data)
             .then((data) => {
                 setIsLoading(false);
-                dispatch(addMessage(data))
+                dispatch(addMessage(data.message))
             });
 
         dispatch(setPrompt(''));

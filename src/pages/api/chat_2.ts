@@ -1,5 +1,4 @@
 import { chat } from "@/libs/openai";
-import { NextApiRequest, NextApiResponse } from "next";
 import { OpenAI } from 'openai';
 
 const openai = new OpenAI();
@@ -7,31 +6,24 @@ const openai = new OpenAI();
 if (!process.env.OPENAI_API_KEY) {
   throw new Error('Missing Environment Variable OPENAI_API_KEY')
 }
-interface ChatRequest extends NextApiRequest {
-  body: {
-    prompt: string
-    messages: ChatMessage[]
-  }
-}
+export const runtime = 'edge';
 
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handler = async (req: Request): Promise<Response> => {
   try {
-    
-    const {threadId, prompt,} = req.body;
+    const body = await req.json()
+    console.log(body.threadId);
+    console.log(body.prompt);
     await openai.beta.threads.messages.create(
-      threadId,
+      body.threadId,
       {
         role: "user",
-        content: prompt
+        content: body.prompt
       }
     );
 
     let run = await openai.beta.threads.runs.create(
-      threadId,
+      body.threadId,
       {
         assistant_id: "asst_flwBRJO6EclYXSm0mklVt2b3"
       }
@@ -39,13 +31,13 @@ export default async function handler(
 
     while (run.status === "queued" || run.status === "in_progress") {
       run = await openai.beta.threads.runs.retrieve(
-        threadId,
+        body.threadId,
         run.id
       );
     }
 
     const messages = await openai.beta.threads.messages.list(
-      threadId
+      body.threadId
     );
     // const completion = await openai.chat({
     //     model: process.env.OPENAI_API_CHAT_MODEL,
@@ -63,20 +55,20 @@ export default async function handler(
     if (messages.data.length > 0) {
       if ('text' in messages.data[0].content[0]) {
         console.log(messages.data[0].content[0].text.value);
-        res.status(200).json({
-          status: true,
-          message: messages.data[0].content[0].text.value
-        })
+        return new Response(JSON.stringify(messages.data[0].content[0].text.value))
       }
     }
 
   } catch (error: any) {
     console.log("error");
     console.log(error);
-    
-    res.status(500).json({
-      status: false,
-      message: "Error"
-    })
+    if (error.response) {
+      return new Response(JSON.stringify(error.response.data))
+    } else {
+      return new Response(JSON.stringify(error.message))
+    }
   }
 }
+
+
+export default handler
