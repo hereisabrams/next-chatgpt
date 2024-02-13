@@ -14,14 +14,17 @@ interface ChatRequest extends NextApiRequest {
   }
 }
 
-export const maxDuration = 300;
+export const config = {
+  maxDuration: 300,
+};
+ 
 export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
+  request: NextApiRequest,
+  response: NextApiResponse,
 ) {
   try {
     
-    const {threadId, prompt,} = req.body;
+    const {threadId, prompt} = request.body;
     await openai.beta.threads.messages.create(
       threadId,
       {
