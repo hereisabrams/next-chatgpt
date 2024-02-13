@@ -109,7 +109,6 @@ const ChatTextarea = () => {
                 return data.response;
             });
 
-        return
         await axios.post('/api/chat', {
             threadId: thread,
             prompt: "Vamos começar o questionário!",
