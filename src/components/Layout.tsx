@@ -22,7 +22,7 @@ const Layout = ({children, title}: LayoutProps) => {
 
             <main className="md:pt-0 md:pl-0 flex flex-col flex-1 h-screen">
                 <div className="flex-1">
-                    <div className="flex flex-col">
+                    <div className="flex flex-col h-[100%]">
                         {children}
                     </div>
                 </div>
