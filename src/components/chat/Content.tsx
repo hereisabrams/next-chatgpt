@@ -9,7 +9,7 @@ import {selectMessages} from "@/redux/reducers/chatSlice";
 const Content = () => {
     const messages = useSelector(selectMessages);
     return (
-        <div className="relative h-[75%]">
+        <div className="relative h-[80%]">
             <NoSSR>
                 {messages.length > 0 ? (
                     <ScrollToBottom
