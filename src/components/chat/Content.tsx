@@ -9,13 +9,13 @@ import {selectMessages} from "@/redux/reducers/chatSlice";
 const Content = () => {
     const messages = useSelector(selectMessages);
     return (
-        <div className="relative flex-1 h-[60%]">
+        <div className="relative flex-1">
             <NoSSR>
                 {messages.length > 0 ? (
                     <ScrollToBottom
                         initialScrollBehavior="auto"
                         followButtonClassName="scroll-to-last-message"
-                        className="!absolute top-0 flex flex-col w-full h-full overflow-x-hidden overflow-y-auto"
+                        className="!absolute top-0 flex flex-col w-full overflow-x-hidden overflow-y-auto"
                     >
                         {messages.map((message, index) =>
                             message.role === "user" ?
