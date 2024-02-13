@@ -8,7 +8,7 @@ type LayoutProps = {
 }
 
 const Layout = ({children, title}: LayoutProps) => {
-    title = `Next GPT - ${title}`
+    title = `Assistente Medida Cheque-Formação + Digital`
     return (
         <>
             <Head>

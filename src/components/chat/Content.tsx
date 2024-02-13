@@ -24,9 +24,9 @@ const Content = () => {
                         )}
                     </ScrollToBottom>
                 ) : (
-                    <div className="flex flex-col items-center my-16">
+                    <div style={{textAlign: "center"}} className="flex flex-col items-center my-16">
                         <h1 className="text-3xl font-bold">Memoria Justificativa Da Ação - GPT</h1>
-                        <p className="text-gray-400 mt-2">Podes fazer as tuas perguntas aqui.</p>
+                        <p className="text-gray-400 mt-2">Este assistente irá ajudar-te a escrever o Anexo 2 para a Medida Cheque-Formação + Digital</p>
                     </div>
                 )}
             </NoSSR>
