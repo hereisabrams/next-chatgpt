@@ -40,10 +40,8 @@ const ChatTextarea = () => {
             })
                 .then(response => response.data)
                 .then((data) => {
-                    console.log("data");
-                    console.log(data);
                     setIsLoading(false);
-                    dispatch(addMessage(data.message))
+                    dispatch(addMessage(data))
                 });
 
             dispatch(setPrompt(''));
@@ -64,11 +62,8 @@ const ChatTextarea = () => {
         })
             .then(response => response.data)
             .then((data) => {
-                console.log("data");
-                console.log("data2");
-                console.log(data);
                 setIsLoading(false);
-                // dispatch(addMessage(data.message))
+                dispatch(addMessage(data))
             });
 
         dispatch(setPrompt(''));
@@ -98,7 +93,7 @@ const ChatTextarea = () => {
                     name="comment"
                     id="comment"
                     className="px-4 py-3 bg-accents-1 focus:outline-none block w-full text-white rounded-md resize-none"
-                    placeholder="Faz a tua pergunta aqui ..."
+                    placeholder={isLoading ? 'Aguarde a resposta ...' : 'Escreva uma mensagem e clique enter ...'}
                     defaultValue={''}
                     value={prompt}
                     onKeyDown={handleKeyDown}

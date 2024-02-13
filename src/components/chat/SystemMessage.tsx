@@ -13,7 +13,7 @@ const SystemMessage = ({message}: SystemMessageProps) => {
                 <div className="flex gap-4 px-3 lg:px-0 py-4">
                     <ChatBubbleOvalLeftEllipsisIcon className="h-8 w-8 text-gray-400"/>
                     <div className="prose prose-invert">
-                        <Markdown content={message} />
+                        <Markdown  content={message} />
                     </div>
                 </div>
             </div>

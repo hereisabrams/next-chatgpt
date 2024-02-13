@@ -20,7 +20,7 @@ const Layout = ({children, title}: LayoutProps) => {
 
             {/* <Sidebar /> */}
 
-            <main className="pt-12 md:pt-0 md:pl-64 flex flex-col flex-1 h-screen">
+            <main className="pt-12 md:pt-0 md:pl-0 flex flex-col flex-1 h-screen">
                 <div className="flex-1">
                     <div className="flex flex-col h-full">
                         {children}
