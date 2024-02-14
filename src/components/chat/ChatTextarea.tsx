@@ -13,9 +13,16 @@ const ChatTextarea = () => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [threadId, setThreadId] = useState<string>("");
-    const [width, setWidth] = useState<number>(window.innerWidth);
+    const [width, setWidth] = useState<number>(0);
+
+    function handleWindowSizeChange() {
+        console.log(window.innerWidth);
+    }
 
     useEffect(() => {
+
+        setWidth(window.innerWidth);
+
         dispatch(addMessage({
             role: 'user',
             content: "Vamos começar o questionário!"
@@ -24,6 +31,9 @@ const ChatTextarea = () => {
         createThread();
         if (textAreaRef.current === null) return;
         textAreaRef.current.focus();
+
+        
+        window.removeEventListener('resize', handleWindowSizeChange);
     }, []);
 
     function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
