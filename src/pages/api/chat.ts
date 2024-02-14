@@ -36,11 +36,13 @@ export default async function handler(
     let run = await openai.beta.threads.runs.create(
       threadId,
       {
-        assistant_id: "asst_flwBRJO6EclYXSm0mklVt2b3"
+        assistant_id: process.env.ASSISTANT_ID
       }
     );
 
+
     while (run.status === "queued" || run.status === "in_progress") {
+      console.log(run.status);
       run = await openai.beta.threads.runs.retrieve(
         threadId,
         run.id

@@ -151,7 +151,6 @@ const ChatTextarea = () => {
                         style={{color:"white", backgroundColor: "#393939", width: width < 768 ? "" : "100%", borderRadius: "10px"}}
                         className="px-4 py-3 focus:outline-none block rounded-md resize-none h-[45px]"
                         placeholder={isLoading ? 'Aguarde a resposta ...' : 'Escreva aqui a sua mensagem ...'}
-                        defaultValue={''}
                         value={prompt}
                         onKeyDown={handleKeyDown}
                         onInput={(e) => dispatch(setPrompt(e.currentTarget.value))}
