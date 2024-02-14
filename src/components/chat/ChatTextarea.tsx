@@ -13,6 +13,7 @@ const ChatTextarea = () => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [threadId, setThreadId] = useState<string>("");
+    const [width, setWidth] = useState<number>(window.innerWidth);
 
     useEffect(() => {
         dispatch(addMessage({
@@ -26,8 +27,8 @@ const ChatTextarea = () => {
     }, []);
 
     function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-        return;
-        if (e.key === 'Enter' && !e.shiftKey) {
+        const isMobile = width <= 768;
+        if (e.key === 'Enter' && !e.shiftKey && !isMobile) {
             e.preventDefault();
             if (isLoading) return;
             if (prompt.trim() === '') return;
@@ -139,7 +140,7 @@ const ChatTextarea = () => {
                         id="comment"
                         style={{color:"white", backgroundColor: "#393939"}}
                         className="px-4 py-3 focus:outline-none block rounded-md resize-none h-[45px]"
-                        placeholder={isLoading ? 'Aguarde a resposta ...' : 'Escreva uma mensagem ...'}
+                        placeholder={isLoading ? 'Aguarde a resposta ...' : 'Escreva aqui a sua mensagem ...'}
                         defaultValue={''}
                         value={prompt}
                         onKeyDown={handleKeyDown}
