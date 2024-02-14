@@ -16,7 +16,7 @@ const ChatTextarea = () => {
     const [width, setWidth] = useState<number>(0);
 
     function handleWindowSizeChange() {
-        console.log(window.innerWidth);
+        setWidth(window.innerWidth);
     }
 
     useEffect(() => {
@@ -142,13 +142,13 @@ const ChatTextarea = () => {
                     <h3 className="font-medium">{isLoading ? "Espere um momento ..." : "Vamos Começar"}</h3>
                 </button>
             ) :
-                <div style={{ display: "flex", flexDirection: "column", gap: "5px" }} className=' h-[105px]'>
+                <div style={{ display: "flex", flexDirection: width < 768 ? "column" : "row" , gap: "5px" }} className=' h-[105px]'>
                     <Textarea
                         ref={textAreaRef}
                         rows={1}
                         name="comment"
                         id="comment"
-                        style={{color:"white", backgroundColor: "#393939"}}
+                        style={{color:"white", backgroundColor: "#393939", width: width < 768 ? "" : "100%", borderRadius: "10px"}}
                         className="px-4 py-3 focus:outline-none block rounded-md resize-none h-[45px]"
                         placeholder={isLoading ? 'Aguarde a resposta ...' : 'Escreva aqui a sua mensagem ...'}
                         defaultValue={''}
