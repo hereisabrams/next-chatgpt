@@ -17,14 +17,14 @@ interface ChatRequest extends NextApiRequest {
 export const config = {
   maxDuration: 300,
 };
- 
+
 export default async function handler(
   request: NextApiRequest,
   res: NextApiResponse,
 ) {
   try {
-    
-    const {threadId, prompt} = request.body;
+
+    const { threadId, prompt } = request.body;
     await openai.beta.threads.messages.create(
       threadId,
       {
@@ -42,7 +42,6 @@ export default async function handler(
 
 
     while (run.status === "queued" || run.status === "in_progress") {
-      console.log(process.env.ASSISTANT_ID);
       console.log(run.status);
       run = await openai.beta.threads.runs.retrieve(
         threadId,
@@ -67,6 +66,9 @@ export default async function handler(
     //console.log(response);
     console.log(messages.data);
     if (messages.data.length > 0) {
+      messages.data.forEach(element => {
+        console.log(element);
+      });
       if ('text' in messages.data[0].content[0]) {
         console.log(messages.data[0].content[0].text.value);
         res.status(200).json({
@@ -79,7 +81,7 @@ export default async function handler(
   } catch (error: any) {
     console.log("error");
     console.log(error);
-    
+
     res.status(500).json({
       status: false,
       message: "Error"
